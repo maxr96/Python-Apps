@@ -30,7 +30,23 @@ def search(title="",author="",year="",isbn=""):
     conn.close()
     return rows
 
+def delete(id):
+    conn=sqlite3.connect("books.db")
+    cur=conn.cursor()
+    cur.execute("DELETE FROM book WHERE id=?", (id,))
+    conn.commit()
+    conn.close()
+
+def update(id,title,author,year,isbn):
+    conn=sqlite3.connect("books.db")
+    cur=conn.cursor()
+    cur.execute("UPDATE book SET title=?, author=?, year=?, isbn=? WHERE id=?", (title,author,year,isbn,id))
+    conn.commit()
+    conn.close()
+
 connect()
-insert("The Earth", "John Smith", 1918,9123423423)
+# insert("The Sun", "John Smith", 1918,9123423424)
+# delete(3)
+# update(4, "The Moon", "John Smith",1918,9123423424)
 print(view())
 print(search(author="John Smith"))
